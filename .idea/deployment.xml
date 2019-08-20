@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="isi@192.168.10.121:22" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="192.168.10.121">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/u01/isi/wenhainlp/NERService/ChineseNER" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="isi@192.168.10.121:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/u01/isi/wenhainlp/NERService/tensorflow-ner" local="$PROJECT_DIR$/../tensorflow-ner" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="isi@192.168.10.192:22">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="isi@192.168.10.83:22">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="isi@192.168.10.83:22 (1)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/u01/isi/yuanba/ChineseNER" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
