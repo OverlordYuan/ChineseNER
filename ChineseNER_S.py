@@ -25,6 +25,7 @@ segment =HanLP.newSegment().enablePlaceRecognize(True)\
     .enableOrganizationRecognize(True)
 
 import socket  # 导入 socket 模块
+import sys
 
 
 
@@ -76,12 +77,12 @@ def check(dict0,dict1):
                break
     return res
 
-@app.route('/bilstm-crf-cn_new', methods=['POST'])
+
 def bilstm_crf_processing_new():
     ckpt1 = datetime.datetime.now()
     senId = 0
     paraId = 1
-    content = request.form['content']
+    content = clientsocket.recv(1024).decode('utf-8')
     sents = re.split("[。？!]", content)
     entities = []
 
@@ -92,26 +93,37 @@ def bilstm_crf_processing_new():
         ners_B = fool.ner(sent)
         ners_C = segment.seg(sent)
         result0 = analysis_B(ners_B,paraId,senId)
-        print(result0)
+        # print(result0)
         result1 = analysis_C(ners_C, paraId, senId)
-        print(result1)
-        # print(result)
+        # print(result1)
         result = check(result0,result1)
         entities.append(result)
     print(datetime.datetime.now()-ckpt1)
     entities =  sum(entities, [])
-    print(entities)
+    # print(entities)
     return str(entities)
 
 
 if __name__ == '__main__':
-    s = socket.socket()  # 创建 socket 对象
-    host = socket.gethostname()  # 获取本地主机名
-    port = 12345  # 设置端口
-    s.bind((host, port))
-    s.listen(5)                 # 等待客户端连接
+    # 创建 socket 对象
+    serversocket = socket.socket(
+        socket.AF_INET, socket.SOCK_STREAM)
+    # 获取本地主机名
+    host = socket.gethostname()
+    port = 9999
+    # 绑定端口号
+    serversocket.bind((host, port))
+    # 设置最大连接数，超过后排队
+    serversocket.listen(5)
     while True:
-        c,addr = s.accept()     # 建立客户端连接
-        print('连接地址：', addr)
-        c.send('欢迎访问菜鸟教程')
-        c.close()                # 关闭连接
+        # 建立客户端连接
+        try:
+            clientsocket, addr = serversocket.accept()
+            print("连接地址: %s" % str(addr))
+            data = bilstm_crf_processing_new()
+            print(data)
+            msg = '欢迎访问菜鸟教程！'
+            clientsocket.send(data.encode('utf-8'))
+            clientsocket.close()           # 关闭连接
+        except Exception as e:
+            print(e)
